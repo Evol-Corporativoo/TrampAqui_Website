@@ -1,0 +1,40 @@
+.vaga-form{
+    position: absolute;
+    width: 50%;
+    top: 28%;
+    left: 35%;
+}
+
+.logo-form{
+    background-image: url('../imagens/letreiro-trampaqui.png');
+    height: 50px;
+    width: 200px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    top: -10%;
+}
+
+.empresa-form{
+    position: relative;
+    top: -10%;
+}
+
+.form-group{
+    display: flex;
+    max-width: 100%;
+    height: 50%;
+    flex-direction: row;
+    margin-top: 3%;
+}
+
+.inputbox.logradouro{
+    width: 80%;
+}
+
+.inputbox.numero{
+    width: 20%;
+    margin-top: 0;
+    margin-left: 2%;
+}

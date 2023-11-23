@@ -1,0 +1,37 @@
+table#vagas{
+    font-size: small;
+    margin-top: 5%;
+    margin-left: 2%;
+}
+
+a.btnDelete{
+    color: rgb(144, 0, 0);
+}
+
+a.btnEdit{
+    color: rgb(192, 192, 1);
+}
+
+th{
+    text-align: center;
+}
+
+th.tiny{
+    width: 3%;
+}
+
+th.small{
+    width: 10%;
+}
+
+th.medium{
+    width: 15%;
+}
+
+th.large{
+    width: 30%;
+}
+
+td{
+    text-align: center;
+}
