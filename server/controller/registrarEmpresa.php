@@ -32,6 +32,7 @@
     $empresaModel->setIdUsuario($usuario->getId());
 
     $cadastrou = DaoEmpresa::cadastrar($empresaModel);
+    echo $cadastrou;
     if($cadastrou==true){
         $empresas = DaoEmpresa::procurarPorUsuario($usuario);
         $_SESSION['empresas'] = serialize($empresas);

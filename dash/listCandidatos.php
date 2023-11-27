@@ -1,7 +1,7 @@
 <?php
 
   include_once('../server/controller/isLogged.php');
-  $idEmpresa = $_SESSION['temporario_idEmpresa'];
+  $idEmpresa = $_GET['idEmpresa'];
   $empresaAtual = DaoEmpresa::procurarId($idEmpresa)[1];
 
 ?>
