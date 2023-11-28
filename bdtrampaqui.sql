@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27-Nov-2023 às 11:52
--- Versão do servidor: 10.4.27-MariaDB
--- versão do PHP: 8.2.0
+-- Tempo de geração: 28/11/2023 às 01:23
+-- Versão do servidor: 10.4.28-MariaDB
+-- Versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbcandidatura`
+-- Estrutura para tabela `tbcandidatura`
 --
 
 CREATE TABLE `tbcandidatura` (
@@ -37,22 +37,29 @@ CREATE TABLE `tbcandidatura` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbcurriculo`
+-- Estrutura para tabela `tbcurriculo`
 --
 
 CREATE TABLE `tbcurriculo` (
   `idCurriculo` int(11) NOT NULL,
   `objetivoCurriculo` varchar(500) NOT NULL,
-  `telefone` varchar(30) NOT NULL,
-  `estadoCivil` varchar(40) NOT NULL,
-  `cpfUsuario` varchar(15) NOT NULL,
+  `genero` varchar(20) NOT NULL,
+  `estadoCivilCurriculo` varchar(40) NOT NULL,
+  `habilidadesCurriculo` varchar(1000) NOT NULL,
   `idUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `tbcurriculo`
+--
+
+INSERT INTO `tbcurriculo` (`idCurriculo`, `objetivoCurriculo`, `genero`, `estadoCivilCurriculo`, `habilidadesCurriculo`, `idUsuario`) VALUES
+(111, 'SAAAAAA', 'masculino', 'solteiro', 'aaaaaaaaaaaaaaaaaaa', 209);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbempresa`
+-- Estrutura para tabela `tbempresa`
 --
 
 CREATE TABLE `tbempresa` (
@@ -60,10 +67,10 @@ CREATE TABLE `tbempresa` (
   `nomeEmpresa` varchar(200) NOT NULL,
   `cnpjEmpresa` varchar(30) NOT NULL,
   `cepEmpresa` varchar(10) NOT NULL,
-  `cidadeEmpresa` varchar(100) NOT NULL,
+  `cidadeEmpresa` varchar(200) NOT NULL,
   `ufEmpresa` varchar(5) NOT NULL,
-  `bairroEmpresa` varchar(100) NOT NULL,
-  `logradouroEmpresa` varchar(100) NOT NULL,
+  `bairroEmpresa` varchar(200) NOT NULL,
+  `logradouroEmpresa` varchar(200) NOT NULL,
   `numeroEmpresa` int(11) NOT NULL,
   `dataCriacaoEmpresa` date NOT NULL,
   `emailEmpresa` varchar(140) NOT NULL,
@@ -74,50 +81,64 @@ CREATE TABLE `tbempresa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `tbempresa`
+-- Despejando dados para a tabela `tbempresa`
 --
 
 INSERT INTO `tbempresa` (`idEmpresa`, `nomeEmpresa`, `cnpjEmpresa`, `cepEmpresa`, `cidadeEmpresa`, `ufEmpresa`, `bairroEmpresa`, `logradouroEmpresa`, `numeroEmpresa`, `dataCriacaoEmpresa`, `emailEmpresa`, `telefoneEmpresa`, `descEmpresa`, `complementoEmpresa`, `idUsuario`) VALUES
-(2, 'JoTec', '50.284.188/0001-15', '08485-290', 'São Paulo', 'SP', 'Conjunto Habitacional Santa Etelvina II', 'Rua Juca', 11, '0000-00-00', '', '(11) 2553-4777', 'Técnologia', '', 1);
+(40, 'Teste de Insert', '35.480.535/0001-91', '08490-560', 'São Paulo', 'SP', 'Santa Etelvina', 'Rua Santa Adelaide', 11, '0000-00-00', '', '(12) 4567-8901', 'Técnologia', '', 210);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbexperiencia`
+-- Estrutura para tabela `tbexperiencia`
 --
 
 CREATE TABLE `tbexperiencia` (
   `idExperiencia` int(11) NOT NULL,
   `tituloExperiencia` varchar(100) NOT NULL,
-  `tipoEmpresa` varchar(50) NOT NULL,
   `nomeEmpresa` varchar(80) NOT NULL,
   `dataInicioExperiencia` date NOT NULL,
   `dataTerminoExperiencia` date NOT NULL,
   `localidadeExperiencia` varchar(200) NOT NULL,
-  `tipoEmprego` varchar(100) NOT NULL,
-  `descExperiencia` varchar(500) NOT NULL,
   `idCurriculo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `tbexperiencia`
+--
+
+INSERT INTO `tbexperiencia` (`idExperiencia`, `tituloExperiencia`, `nomeEmpresa`, `dataInicioExperiencia`, `dataTerminoExperiencia`, `localidadeExperiencia`, `idCurriculo`) VALUES
+(11, 'Est', 'aaa', '2022-02-01', '2022-07-01', 'aaaaaaaaaaaaa', 111),
+(12, 'Gestooooo', 'oooooo', '2022-05-01', '2023-03-01', 'oooooo', 111);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbformacao`
+-- Estrutura para tabela `tbformacao`
 --
 
 CREATE TABLE `tbformacao` (
   `idFormacao` int(11) NOT NULL,
-  `areaFormacao` varchar(50) NOT NULL,
+  `instituicaoFormacao` varchar(100) NOT NULL,
   `dataInicioFormacao` date NOT NULL,
   `dataTerminoFormacao` date NOT NULL,
   `localFormacao` varchar(80) NOT NULL,
+  `diplomaFormacao` varchar(100) NOT NULL,
+  `situacaoFormacao` varchar(30) NOT NULL,
   `idCurriculo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `tbformacao`
+--
+
+INSERT INTO `tbformacao` (`idFormacao`, `instituicaoFormacao`, `dataInicioFormacao`, `dataTerminoFormacao`, `localFormacao`, `diplomaFormacao`, `situacaoFormacao`, `idCurriculo`) VALUES
+(95, 'CT', '2021-02-01', '2023-12-01', 'SP', 'CSAA', 'Trancado', 111);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbidioma`
+-- Estrutura para tabela `tbidioma`
 --
 
 CREATE TABLE `tbidioma` (
@@ -127,10 +148,17 @@ CREATE TABLE `tbidioma` (
   `idCurriculo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `tbidioma`
+--
+
+INSERT INTO `tbidioma` (`idIdioma`, `idioma`, `nivelIdioma`, `idCurriculo`) VALUES
+(49, 'Inglês', 'Intermediário', 111);
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbintercambio`
+-- Estrutura para tabela `tbintercambio`
 --
 
 CREATE TABLE `tbintercambio` (
@@ -146,7 +174,7 @@ CREATE TABLE `tbintercambio` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbtrabvoluntario`
+-- Estrutura para tabela `tbtrabvoluntario`
 --
 
 CREATE TABLE `tbtrabvoluntario` (
@@ -162,7 +190,7 @@ CREATE TABLE `tbtrabvoluntario` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbusuario`
+-- Estrutura para tabela `tbusuario`
 --
 
 CREATE TABLE `tbusuario` (
@@ -177,55 +205,60 @@ CREATE TABLE `tbusuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `tbusuario`
+-- Despejando dados para a tabela `tbusuario`
 --
 
 INSERT INTO `tbusuario` (`idUsuario`, `nomeUsuario`, `cpfUsuario`, `emailUsuario`, `telefoneUsuario`, `dataNascUsuario`, `tipoUsuario`, `senhaUsuario`) VALUES
-(1, 'jojo', '480.592.658-90', 'joia@oficial.com', '', '0000-00-00', b'1', '$2y$10$EvC4h.YAskJrmCemJMinaup3zhZdoVZEN3mr8aGbFf4ElNBk9t2zW');
+(209, 'Gustavo de Souza Costa Joia', '48059265890', 'joia@oficial.com', '(11) 94813-2408', '2005-05-30', b'0', '$2y$10$02QIvww9620hC.xlxyWZkep/RJntkJy8IQUL04m3Myf7spOj/kgaa'),
+(210, 'Adm supremo', '230.252.138-25', 'adm@oficial.com', '', '0000-00-00', b'1', '$2y$10$1XJTV/Ah8sqK52HDP927jODEXBcjoryP7scasPuApJNA03HYSQqOW');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbvaga`
+-- Estrutura para tabela `tbvaga`
 --
 
 CREATE TABLE `tbvaga` (
   `idVaga` int(11) NOT NULL,
   `nomeVaga` varchar(100) NOT NULL,
-  `descVaga` varchar(300) NOT NULL,
+  `descVaga` varchar(2000) NOT NULL,
   `cargoVaga` varchar(30) NOT NULL,
-  `cargaHorariaVaga` time NOT NULL,
+  `cargaHorariaVaga` int(11) NOT NULL,
   `salarioVaga` double NOT NULL,
-  `sobreVaga` varchar(500) NOT NULL,
+  `tipoVaga` varchar(30) NOT NULL,
+  `modeloVaga` varchar(30) NOT NULL,
+  `formacaoVaga` varchar(30) NOT NULL,
   `idEmpresa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `tbvaga`
+-- Despejando dados para a tabela `tbvaga`
 --
 
-INSERT INTO `tbvaga` (`idVaga`, `nomeVaga`, `descVaga`, `cargoVaga`, `cargaHorariaVaga`, `salarioVaga`, `sobreVaga`, `idEmpresa`) VALUES
-(1, 'Estágio em Dor e Depressão', 'Você vai criar caráter na base da dor', 'Estágio', '07:00:00', 3789, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 2);
+INSERT INTO `tbvaga` (`idVaga`, `nomeVaga`, `descVaga`, `cargoVaga`, `cargaHorariaVaga`, `salarioVaga`, `tipoVaga`, `modeloVaga`, `formacaoVaga`, `idEmpresa`) VALUES
+(24, 'Operador de computador', 'aaaaaaaaaaaaaaaaaaaaaaaaa', 'Assistência', 40, 3790, 'estagio', 'presencial', 'medio-completo', 40),
+(25, 'Operador de computador', 'aaaaaaaaaaaaaaaaaaaaaaaaa', 'Assistência', 40, 3790.99, 'estagio', 'presencial', 'medio-completo', 40);
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices para tabela `tbcandidatura`
+-- Índices de tabela `tbcandidatura`
 --
 ALTER TABLE `tbcandidatura`
   ADD PRIMARY KEY (`idCandidatura`);
 
 --
--- Índices para tabela `tbcurriculo`
+-- Índices de tabela `tbcurriculo`
 --
 ALTER TABLE `tbcurriculo`
   ADD PRIMARY KEY (`idCurriculo`),
+  ADD UNIQUE KEY `unique_idUsuario` (`idUsuario`),
   ADD KEY `fk_idUsuario` (`idUsuario`);
 
 --
--- Índices para tabela `tbempresa`
+-- Índices de tabela `tbempresa`
 --
 ALTER TABLE `tbempresa`
   ADD PRIMARY KEY (`idEmpresa`),
@@ -233,56 +266,57 @@ ALTER TABLE `tbempresa`
   ADD KEY `fk_idUsuario` (`idUsuario`);
 
 --
--- Índices para tabela `tbexperiencia`
+-- Índices de tabela `tbexperiencia`
 --
 ALTER TABLE `tbexperiencia`
   ADD PRIMARY KEY (`idExperiencia`),
   ADD KEY `idCurriculo` (`idCurriculo`);
 
 --
--- Índices para tabela `tbformacao`
+-- Índices de tabela `tbformacao`
 --
 ALTER TABLE `tbformacao`
   ADD PRIMARY KEY (`idFormacao`),
   ADD KEY `idCurriculo` (`idCurriculo`);
 
 --
--- Índices para tabela `tbidioma`
+-- Índices de tabela `tbidioma`
 --
 ALTER TABLE `tbidioma`
   ADD PRIMARY KEY (`idIdioma`),
   ADD KEY `idCurriculo` (`idCurriculo`);
 
 --
--- Índices para tabela `tbintercambio`
+-- Índices de tabela `tbintercambio`
 --
 ALTER TABLE `tbintercambio`
   ADD PRIMARY KEY (`idIntercambio`),
   ADD KEY `idCurriculo` (`idCurriculo`);
 
 --
--- Índices para tabela `tbtrabvoluntario`
+-- Índices de tabela `tbtrabvoluntario`
 --
 ALTER TABLE `tbtrabvoluntario`
   ADD PRIMARY KEY (`idTrabVoluntatio`),
   ADD KEY `fk_idCurriculo` (`idCurriculo`);
 
 --
--- Índices para tabela `tbusuario`
+-- Índices de tabela `tbusuario`
 --
 ALTER TABLE `tbusuario`
   ADD PRIMARY KEY (`idUsuario`),
-  ADD UNIQUE KEY `unique_email` (`emailUsuario`);
+  ADD UNIQUE KEY `unique_email` (`emailUsuario`),
+  ADD UNIQUE KEY `unique_cpf` (`cpfUsuario`);
 
 --
--- Índices para tabela `tbvaga`
+-- Índices de tabela `tbvaga`
 --
 ALTER TABLE `tbvaga`
   ADD PRIMARY KEY (`idVaga`),
   ADD KEY `fk_idEmpresa` (`idEmpresa`) USING BTREE;
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
@@ -295,31 +329,31 @@ ALTER TABLE `tbcandidatura`
 -- AUTO_INCREMENT de tabela `tbcurriculo`
 --
 ALTER TABLE `tbcurriculo`
-  MODIFY `idCurriculo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCurriculo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT de tabela `tbempresa`
 --
 ALTER TABLE `tbempresa`
-  MODIFY `idEmpresa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idEmpresa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de tabela `tbexperiencia`
 --
 ALTER TABLE `tbexperiencia`
-  MODIFY `idExperiencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idExperiencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `tbformacao`
 --
 ALTER TABLE `tbformacao`
-  MODIFY `idFormacao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idFormacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT de tabela `tbidioma`
 --
 ALTER TABLE `tbidioma`
-  MODIFY `idIdioma` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idIdioma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT de tabela `tbintercambio`
@@ -337,62 +371,62 @@ ALTER TABLE `tbtrabvoluntario`
 -- AUTO_INCREMENT de tabela `tbusuario`
 --
 ALTER TABLE `tbusuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
 
 --
 -- AUTO_INCREMENT de tabela `tbvaga`
 --
 ALTER TABLE `tbvaga`
-  MODIFY `idVaga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idVaga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- Restrições para despejos de tabelas
+-- Restrições para tabelas despejadas
 --
 
 --
--- Limitadores para a tabela `tbcurriculo`
+-- Restrições para tabelas `tbcurriculo`
 --
 ALTER TABLE `tbcurriculo`
   ADD CONSTRAINT `tbcurriculo_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `tbusuario` (`idUsuario`);
 
 --
--- Limitadores para a tabela `tbempresa`
+-- Restrições para tabelas `tbempresa`
 --
 ALTER TABLE `tbempresa`
   ADD CONSTRAINT `tbempresa_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `tbusuario` (`idUsuario`);
 
 --
--- Limitadores para a tabela `tbexperiencia`
+-- Restrições para tabelas `tbexperiencia`
 --
 ALTER TABLE `tbexperiencia`
   ADD CONSTRAINT `tbexperiencia_ibfk_1` FOREIGN KEY (`idCurriculo`) REFERENCES `tbcurriculo` (`idCurriculo`);
 
 --
--- Limitadores para a tabela `tbformacao`
+-- Restrições para tabelas `tbformacao`
 --
 ALTER TABLE `tbformacao`
   ADD CONSTRAINT `tbformacao_ibfk_1` FOREIGN KEY (`idCurriculo`) REFERENCES `tbcurriculo` (`idCurriculo`);
 
 --
--- Limitadores para a tabela `tbidioma`
+-- Restrições para tabelas `tbidioma`
 --
 ALTER TABLE `tbidioma`
   ADD CONSTRAINT `tbidioma_ibfk_1` FOREIGN KEY (`idCurriculo`) REFERENCES `tbcurriculo` (`idCurriculo`);
 
 --
--- Limitadores para a tabela `tbintercambio`
+-- Restrições para tabelas `tbintercambio`
 --
 ALTER TABLE `tbintercambio`
   ADD CONSTRAINT `tbintercambio_ibfk_1` FOREIGN KEY (`idCurriculo`) REFERENCES `tbcurriculo` (`idCurriculo`);
 
 --
--- Limitadores para a tabela `tbtrabvoluntario`
+-- Restrições para tabelas `tbtrabvoluntario`
 --
 ALTER TABLE `tbtrabvoluntario`
   ADD CONSTRAINT `tbtrabvoluntario_ibfk_1` FOREIGN KEY (`idCurriculo`) REFERENCES `tbcurriculo` (`idCurriculo`);
 
 --
--- Limitadores para a tabela `tbvaga`
+-- Restrições para tabelas `tbvaga`
 --
 ALTER TABLE `tbvaga`
   ADD CONSTRAINT `tbvaga_ibfk_2` FOREIGN KEY (`idEmpresa`) REFERENCES `tbempresa` (`idEmpresa`);

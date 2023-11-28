@@ -1,8 +1,11 @@
 <?php
 
   include_once('../server/controller/isLogged.php');
+  require_once('../server/dao/DaoCandidatura.php');
   $idEmpresa = $_GET['idEmpresa'];
+  $idVaga = $_GET['idVaga'];
   $empresaAtual = DaoEmpresa::procurarId($idEmpresa)[1];
+  $_SESSION['buscarCandidatos'] = [$idVaga, $idEmpresa];
 
 ?>
 <!DOCTYPE html>
@@ -73,6 +76,7 @@
     <!-- <script defer src="../js/script.js"></script> -->
     <script defer src="../js-formatacao/formata.js"></script>
     <!-- <script defer src="../js-formatacao/valida.js"></script> -->
+    <script defer src="./js/buscarCandidatos.js"></script>
 
   </head>
 
@@ -297,13 +301,13 @@
                     <div class="busca-candidatos">
                         <input type="search" class="pesquisa-candidatos" placeholder="Pesquise">
                         <div class="topo-filtro">
-                          <button class="candidatos-filtro">
-                              Aprovados
+                          <button id="aprovado" class="candidatos-filtro">
+                            Aprovados
                           </button>
-                          <button class="candidatos-filtro">
-                              Em análise
+                          <button id="analise" class="candidatos-filtro">
+                            Em análise
                           </button>
-                          <button class="candidatos-filtro">
+                          <button id="reprovado" class="candidatos-filtro">
                             Reprovado
                         </button>
                         </div>
@@ -323,7 +327,7 @@
 
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="table-body">
                           <tr>
                             <th scope="row">1</th>
                             <td>Luana Gabrielle Rodrigues Macedo</td>
