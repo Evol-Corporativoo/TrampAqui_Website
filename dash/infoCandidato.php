@@ -309,7 +309,13 @@
                             <p class="bold">Nível de instrução</p>
                             <p id="instrucao"><?php
 
-                              echo ($data[2][0]['diplomaFormacao']);
+                              if(count($data[2])>0){
+                                echo ($data[2][0]['diplomaFormacao']);
+                              } else {
+                                echo ('Não registrado');
+                              }
+
+                              
 
                             ?></p>
                           </div>
