@@ -1,8 +1,16 @@
 <?php
 
   include_once('../server/controller/isLogged.php');
-  $idEmpresa = $_SESSION['temporario_idEmpresa'];
+  require_once('../server/dao/DaoCurriculo.php');
+  $idEmpresa = $_SESSION['idEmpresa_real'];
   $empresaAtual = DaoEmpresa::procurarId($idEmpresa)[1];
+  $idCurriculo = $_GET['idCurriculo'];
+  $data = DaoCurriculo::buscarCurriculo($idCurriculo);
+
+  $dataNasc = $data[0]['dataNascUsuario'];
+  $explode = explode('-', $dataNasc);
+  $newDataNasc = $explode[2].'/'.$explode[1].'/'.$explode[0];
+  //print_r($data);
 
 ?>
 <!DOCTYPE html>
@@ -273,7 +281,7 @@
                   <!-- Conteúdo -->
                   <div class="submenu">
                     <div class="conteudo-submenu">
-                      <a href="listCandidatos.php" class="volta-botao">
+                      <a href="listCandidatos.php?idVaga=<?php echo $_SESSION['idVaga_real']; ?>" class="volta-botao">
                         <span class="material-symbols-outlined volta-botao">
                           arrow_back
                           </span>
@@ -288,7 +296,7 @@
                         <div class="left-candidato">
                           <div class="align-info">
                             <p class="bold">Nome</p>
-                            <p id="nome">Luana Gabrielle Rodrigues Macedo</p>
+                            <p id="nome"><?php echo $data[0]['nomeUsuario']; ?></p>
                           </div>
                           <div class="align-info">
                             <p class="bold">Endereço</p>
@@ -299,12 +307,16 @@
                         <div class="right-candidato">
                           <div class="align-info">
                             <p class="bold">Nível de instrução</p>
-                            <p id="instrucao">Ensino superior completo</p>
+                            <p id="instrucao"><?php
+
+                              echo ($data[2][0]['diplomaFormacao']);
+
+                            ?></p>
                           </div>
                           <div class="align-info">
                             <p class="bold">Contato</p>
-                            <p id="email">luana.gabrielle@gmail.com</p>
-                            <p id="telefone">11980108127</p>
+                            <p id="email"><?php echo $data[0]['emailUsuario']; ?></p>
+                            <p id="telefone"><?php echo $data[0]['telefoneUsuario']; ?></p>
                           </div>
                         </div>
                       </div>
@@ -314,70 +326,102 @@
                             <div class="left-candidato">
                               <div class="align-info">
                                 <p class="bold">Gênero</p>
-                                <p id="genero">Feminino</p>
+                                <p id="genero"><?php echo $data[1]['genero']; ?></p>
                               </div>
                               <div class="align-info">
                                 <p class="bold">Data de nascimento</p>
-                                <p id="data-nasc">24-04-2005</p>
+                                <p id="data-nasc"><?php echo $newDataNasc; ?></p>
                               </div>
                             </div>
                             <div class="right-candidato">
                               <div class="align-info">
                                 <p class="bold">Estado civil</p>
-                                <p id="estadocivil">Solteiro</p>
+                                <p id="estadocivil"><?php echo $data[1]['estadoCivilCurriculo']; ?></p>
                               </div>
                             </div>
                           </div>
                           <div class="baixo-candidato">
                               <div class="align-info">
                                 <p class="bold">Objetivo</p>
-                                <p id="objetivo">Algum objetivo</p>
+                                <p id="objetivo"><?php echo $data[1]['objetivoCurriculo'];?></p>
                               </div>
                           </div>
+
+                          <?php foreach ($data[4] as $key => $experiencia) {
+
+                            $inicio = $experiencia['dataInicioExperiencia'];
+                            $termino = $experiencia['dataTerminoExperiencia'];
+
+                            $ex_inicio = explode('-',$inicio);
+                            $ex_fim = explode('-', $termino);
+
+                            $n_inicio = $ex_inicio[1].'/'.$ex_inicio[0];
+                            $n_termino = $ex_fim[1].'/'.$ex_fim[0];
+                            # code...
+                          ?>
+
                           <div class="baixo-candidato">
+
                             <div class="align-info">
-                              <p class="bold">Histórico profissional</p>
+                              <?php if($key == 0){ ?><p class="bold">Histórico profissional</p><?php } ?>
                               <div class="align-hist" id="historico">
-                                <p id="cargo">ESTAGIARIO MT ESTAGIARIO</p>
-                                <p id="duracao-emprego">(Maio|2023 - Dezembro|2023)</p>
+                                <p id="cargo"><?php echo($experiencia['tituloExperiencia']); ?></p>
+                                <p id="duracao-emprego">(<?php echo($n_inicio); ?> - <?php echo($n_termino); ?>)</p>
                               </div>
                               <div class="align-hist" id="historico">
-                                <p id="local">São Paulo</p>
-                                <p id="empresa">Empresa x</p>
+                                <p id="local"><?php echo($experiencia['localidadeExperiencia']); ?></p>
+                                <p id="empresa">Empresa <?php echo($experiencia['nomeEmpresa']); ?></p>
                               </div>
-                              <p id="atribuicoes"><span>-&nbsp</span>Fiz tal tal tal</p>
                             </div>
+
                           </div>
 
-                          <div class="baixo-candidato">
-                            <div class="align-info">
-                              <p class="bold">Formação acadêmica</p>
-                              <div class="align-hist" id="academico">
-                                <p id="curso">Um curso mt bom</p>
-                                <p id="duracao-curso">(Maio|2023 - Dezembro|2023)</p>
-                              </div>
-                              <div class="align-hist" id="historico">
-                                <p id="local">São Paulo</p>
-                                <p id="instituicao">ETEC de Cidade Tiradentes</p>
-                              </div>
-                            </div>
-                          </div>
+                          <?php } ?>
 
-                          <div class="baixo-candidato">
-                            <div class="align-info">
-                              <p class="bold">Idioma</p>
-                              <div class="align-hist" id="idioma">
-                                <p id="idioma">Inglês</p>
-                                <p id="nivel">Avançado</p>
-                              </div>
+                          
 
+                            <?php foreach ($data[2] as $key => $formacao) {
+
+                              $dataInicio = $formacao['dataInicioFormacao'];
+                              $dataTermino = $formacao['dataTerminoFormacao'];
+
+                              $e_inicio = explode('-',$dataInicio);
+                              $e_fim = explode('-', $dataTermino);
+
+                              $n_dataInicio = $e_inicio[1].'/'.$e_inicio[0];
+                              $n_dataTermino = $e_fim[1].'/'.$e_fim[0];
+
+                              # code...
+                            ?>
+                            <div class="baixo-candidato">
                               <div class="align-info">
-                                <div class="align-hist" id="idioma">
-                                  <p id="idioma">Espanhol</p>
-                                  <p id="nivel">Avançado</p>
+                                <?php if($key==0){ ?><p class="bold">Formação acadêmica</p><?php } ?>
+                                <div class="align-hist" id="academico">
+                                  <p id="curso"><?php echo $formacao['diplomaFormacao']; ?></p>
+                                  <p id="duracao-curso">(<?php echo($n_dataInicio); ?> - <?php echo($n_dataTermino); ?>)</p>
                                 </div>
+                                <div class="align-hist" id="historico">
+                                  <p id="local"><?php echo $formacao['localFormacao']; ?></p>
+                                  <p id="instituicao"><?php echo $formacao['instituicaoFormacao']; ?></p>
+                                </div>
+                              </div>
                             </div>
-                          </div>
+                              <?php } ?>
+
+                          
+
+                          <div class="baixo-candidato">
+                            <?php foreach ($data[3] as $key => $idioma) {
+                              # code...
+                            ?>
+                            <div class="align-info">
+                              <?php if($key==0){?><p class="bold">Idioma</p><?php } ?>
+                              <div class="align-hist" id="idioma">
+                                <p id="idioma"><?php echo $idioma['idioma']; ?></p>
+                                <p id="nivel"><?php echo $idioma['nivelIdioma']; ?></p>
+                              </div>
+                            </div>
+                            <?php } ?>
                           </div>
                         
 
@@ -385,7 +429,7 @@
                             <div class="align-info">
                               <p class="bold">Habilidades e competências</p>
                               <div class="align-hist" id="habilidades">
-                                <p id="competencias">muito competente parabeens</p>
+                                <p id="competencias"><?php echo $data[1]['habilidadesCurriculo']; ?></p>
                               </div>
                             </div>
                           </div>
@@ -394,8 +438,8 @@
 
                     <div class="compativel-candidato">
                       <h3>Status:</h3>
-                      <a href="" class="botao-aprovar">Aprovar</a>
-                      <a href=""  class="botao-reprovar">Reprovar</a>
+                      <a href="http://localhost/TrampAqui_Website-main/server/controller/statusCandidato.php?id=<?php echo $_GET['idCandidatura']; ?>&status=2" class="botao-aprovar">Aprovar</a>
+                      <a href="http://localhost/TrampAqui_Website-main/server/controller/statusCandidato.php?id=<?php echo $_GET['idCandidatura']; ?>&status=0"  class="botao-reprovar">Reprovar</a>
                     </div>
                   </div>         
             <!-- / Content -->

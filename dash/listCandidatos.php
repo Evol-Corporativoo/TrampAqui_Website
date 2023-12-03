@@ -2,10 +2,13 @@
 
   include_once('../server/controller/isLogged.php');
   require_once('../server/dao/DaoCandidatura.php');
-  $idEmpresa = $_GET['idEmpresa'];
+  $idEmpresa = $_SESSION['idEmpresa_real'];
   $idVaga = $_GET['idVaga'];
+  $_SESSION['idVaga_real'] = $idVaga;
   $empresaAtual = DaoEmpresa::procurarId($idEmpresa)[1];
   $_SESSION['buscarCandidatos'] = [$idVaga, $idEmpresa];
+  $idVaga = $_SESSION['idVaga_real'];
+  $stats = DaoCandidatura::stats($idVaga);
 
 ?>
 <!DOCTYPE html>
@@ -279,22 +282,22 @@
                     <div class="align-cont">
                         <div class="cont-candidatos">
                             <div class="text-candidatos">
-                                <span id="candidatos" class="n-candidatos">100</span><p class="cont-text-candidatos">candidatos</p>
+                                <span id="candidatos" class="n-candidatos"><?php echo $stats[0]; ?></span><p class="cont-text-candidatos">candidatos</p>
                             </div>
                         </div>
                         <div class="cont-candidatos">
                             <div class="text-candidatos">
-                                <span id="aprovados" class="n-candidatos">10</span><p class="cont-text-candidatos">aprovados</p>
+                                <span id="aprovados" class="n-candidatos"><?php echo $stats[1]; ?></span><p class="cont-text-candidatos">aprovados</p>
                             </div>
                         </div>
                         <div class="cont-candidatos">
                             <div class="text-candidatos">
-                                <span id="espera" class="n-candidatos">20</span><p class="cont-text-candidatos">em análise</p>
+                                <span id="espera" class="n-candidatos"><?php echo $stats[2]; ?></span><p class="cont-text-candidatos">em análise</p>
                             </div>
                         </div>
                         <div class="cont-candidatos">
                             <div class="text-candidatos">
-                                <span id="reprovados" class="n-candidatos">70</span><p class="cont-text-candidatos">reprovados</p>
+                                <span id="reprovados" class="n-candidatos"><?php echo $stats[3]; ?></span><p class="cont-text-candidatos">reprovados</p>
                             </div>
                         </div>
                     </div>
@@ -328,30 +331,6 @@
                           </tr>
                         </thead>
                         <tbody id="table-body">
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Luana Gabrielle Rodrigues Macedo</td>
-                            <td><a href="infoCandidato.php">Currículo</a></td>
-                            <td>Em análise</td>
-                            <td><a href="#"><span class="material-symbols-outlined">check_circle</span></a></td>
-                            <td><a href="#"><span class="material-symbols-outlined">disabled_by_default</span></a></td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>Ana Ferreira Martins</td>
-                            <td><a href="infoCandidato.php">Currículo</a></td>
-                            <td>Aprovado</td>
-                            <td><a href="#"><span class="material-symbols-outlined">check_circle</span></a></td>
-                            <td><a href="#"><span class="material-symbols-outlined">disabled_by_default</span></a></td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td>Misael Vieira Nunes</td>
-                            <td><a href="infoCandidato.php">Currículo</a></td>
-                            <td>Reprovado</td>
-                            <td><a href="#"><span class="material-symbols-outlined">check_circle</span></a></td>
-                            <td><a href="#"><span class="material-symbols-outlined">disabled_by_default</span></a></td>
-                          </tr>
                         </tbody>
                       </table>
                 </div>

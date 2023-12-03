@@ -3,6 +3,7 @@
 include_once(__DIR__.'/../server/controller/isLogged.php');
 require_once(__DIR__.'/../server/dao/DaoEmpresa.php');
 $idEmpresa = $_GET['idEmpresa'];
+$_SESSION['idEmpresa_real'] = $idEmpresa;
 
 $empresaAtual = DaoEmpresa::procurarId($idEmpresa)[1];
 if($empresaAtual['idUsuario'] != $usuarioLogado->getId()){

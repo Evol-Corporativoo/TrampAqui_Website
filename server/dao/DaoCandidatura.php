@@ -70,6 +70,59 @@
             }
         }
 
+        public static function stats($idVaga){
+
+            $conexao = Conexao::conectar();
+
+            $select = 'SELECT COUNT(idCandidatura) AS total FROM tbcandidatura WHERE idVaga = ?';
+            $prepare = $conexao->prepare($select);
+            $prepare->bindValue(1, $idVaga);
+
+            try{
+                $prepare->execute();
+                $array = $prepare->fetch(PDO::FETCH_ASSOC);
+                $total = $array['total'];
+            } catch(Exception $e){
+                return $e;
+            }
+
+            $select = 'SELECT COUNT(idCandidatura) AS aprovados FROM tbcandidatura WHERE idVaga = ? AND status = 2';
+            $prepare = $conexao->prepare($select);
+            $prepare->bindValue(1, $idVaga);
+            try{
+                $prepare->execute();
+                $array = $prepare->fetch(PDO::FETCH_ASSOC);
+                $aprovados = $array['aprovados'];
+            } catch(Exception $e){
+                return $e;
+            }
+
+            $select = 'SELECT COUNT(idCandidatura) AS analise FROM tbcandidatura WHERE idVaga = ? AND status = 1';
+            $prepare = $conexao->prepare($select);
+            $prepare->bindValue(1, $idVaga);
+            try{
+                $prepare->execute();
+                $array = $prepare->fetch(PDO::FETCH_ASSOC);
+                $analise = $array['analise'];
+            } catch(Exception $e){
+                return $e;
+            }
+
+            $select = 'SELECT COUNT(idCandidatura) AS reprovados FROM tbcandidatura WHERE idVaga = ? AND status = 0';
+            $prepare = $conexao->prepare($select);
+            $prepare->bindValue(1, $idVaga);
+            try{
+                $prepare->execute();
+                $array = $prepare->fetch(PDO::FETCH_ASSOC);
+                $reprovados = $array['reprovados'];
+            } catch(Exception $e){
+                return $e;
+            }
+
+            return [$total, $aprovados, $analise, $reprovados];
+
+        }
+
     }
 
 ?>
